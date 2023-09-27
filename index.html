@@ -476,7 +476,7 @@
                     // 檢查帳號是否重複
                     $.ajax({
                         type: "POST",
-                        url: "api/register_check_api.php",
+                        url: "https://panel.000webhost.com/api/register_check_api.php",
                         data: { username: $("#register_username").val() },
                         dataType: "json",
                         success: showdata_uni,
