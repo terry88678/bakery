@@ -44,11 +44,11 @@
                             <div class="col">
                                 <ul class="nav d-flex justify-content-end mt-5">
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link ms-3 me-3 menu-top wow animate__flipInX"
+                                        <a href="about.html" class="nav-link ms-3 me-3 menu-top wow animate__flipInX"
                                             data-wow-delay="0s" data-wow-duration="1s">公司資訊</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link ms-3 me-3 menu-top wow animate__flipInX"
+                                        <a href="news.html" class="nav-link ms-3 me-3 menu-top wow animate__flipInX"
                                             data-wow-delay="0s" data-wow-duration="1.3s">最新消息</a>
                                     </li>
                                     <li class="nav-item">
@@ -56,7 +56,7 @@
                                             data-wow-duration="1.6s">商品選購</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link ms-3 me-3 menu-top wow animate__flipInX"
+                                        <a href="contact.html" class="nav-link ms-3 me-3 menu-top wow animate__flipInX"
                                             data-wow-delay="0s" data-wow-duration="1.6s">聯絡我們</a>
                                     </li>
                                     <li class="nav-item">
@@ -142,17 +142,17 @@
                 <div class="col-9">
                     <section id="s300">
                         <h4 class="text-start branch mt-3 mb-3">商品選購 / 烘焙原料 / <a href="#">糖類</a></h4>
-                        <div class="row wow animate__fadeIn" data-wow-delay="0s"
-                            data-wow-duration="1.5s" id="productlist">
+                        <div class="row wow animate__fadeIn" data-wow-delay="0s" data-wow-duration="1.5s"
+                            id="productlist">
                             <div class="col-lg-3 col-6 d-flex flex-column product-box mb-5"
                                 v-for="(item, key) in filterData[currentPage]">
-                                <div class="card card-shadow ps-2 pe-2" style="background-color: var(--brown11);">
+                                <div class="card card-shadow ps-2 pe-2 h-100" style="background-color: var(--brown11);">
                                     <!-- Vue 內不能有 - 號，因此 - 刪掉後下個字要改大寫 -->
-                                    <div class="col d-flex justify-content-center product-box">
-                                        <img :src="'upload/'+item.Photo" class="img-thumbnail mt-2 mb-2">
-                                    </div>
+                                    <div class="col d-flex justify-content-center product-box"><img
+                                            :src="'upload/'+item.Photo" class="img-thumbnail mt-2 mb-2"></div>
                                     <h6 class="text-center" style="height: 45px;">{{item.Product}}</h6>
                                     <div class="text-center">售價：$ {{item.Price}}</div>
+
                                     <a href="#" class="btn btn-default m-3" data-bs-toggle="modal"
                                         data-bs-target="#infoModal" :data-id="item.id" :data-category="item.Category"
                                         :data-product="item.Product" :data-price="item.Price"
@@ -557,6 +557,7 @@
         $flag_birthday = false;
         $flag_phone = false;
         $flag_email = false;
+        $flag_customer = false;
         var $pid;
         var $tmp_uid;
         var $tmp_q;
@@ -744,15 +745,16 @@
                 }
             });
 
+            // 臨時顧客電話監聽
             $("#direct_phone").bind("input propertychange", function () {
                 if ($(this).val().length == 10) {
                     $(this).removeClass("is-invalid");
                     $(this).addClass("is-valid");
-                    $flag_phone = true;
+                    $flag_customer = true;
                 } else {
                     $(this).removeClass("is-valid");
                     $(this).addClass("is-invalid");
-                    $flag_phone = false;
+                    $flag_customer = false;
                 }
             });
 
@@ -918,6 +920,8 @@
             });
 
             $("#directbuy_btn").click(function () {
+
+                if ($flag_customer == true){
                 setCookie('customer_uid', $("#direct_phone").val(), 0.1);
 
                 var new_customer = $("#direct_phone").val();
@@ -932,62 +936,65 @@
                         alert("電話驗證錯誤-api/phone_check_api.php")
                     }
                 });
+            }else {
+                alert("請輸入手機號碼");
+            }
 
-            });
+        });
 
 
-            // 註冊按鈕監聽
-            $("#register_btn").click(function () {
-                if ($flag_agree && $flag_register_username && $flag_register_password && $flag_repassword && $flag_realname && $flag_birthday && $flag_phone && $flag_email) {
-                    $.ajax({
-                        type: "POST",
-                        url: "api/register_api.php",
-                        data: { username: $("#register_username").val(), password: $("#register_password").val(), realname: $("#realname").val(), birthday: $("#birthday").val(), phone: $("#phone").val(), email: $("#email").val() },
-                        dataType: "json",
-                        success: showdata_register,
-                        error: function () {
-                            alert("註冊錯誤-api/register_api.php")
-                        }
-                    });
-                } else {
-                    alert("資料不完整或不符規定");
+        // 註冊按鈕監聽
+        $("#register_btn").click(function () {
+            if ($flag_agree && $flag_register_username && $flag_register_password && $flag_repassword && $flag_realname && $flag_birthday && $flag_phone && $flag_email) {
+                $.ajax({
+                    type: "POST",
+                    url: "api/register_api.php",
+                    data: { username: $("#register_username").val(), password: $("#register_password").val(), realname: $("#realname").val(), birthday: $("#birthday").val(), phone: $("#phone").val(), email: $("#email").val() },
+                    dataType: "json",
+                    success: showdata_register,
+                    error: function () {
+                        alert("註冊錯誤-api/register_api.php")
+                    }
+                });
+            } else {
+                alert("資料不完整或不符規定");
+            }
+        });
+
+        // 登入按鈕監聽
+        $("#login_btn").click(function () {
+
+            $.ajax({
+                type: "POST",
+                url: "api/login_api.php",
+                data: { username: $("#login_username").val(), password: $("#login_password").val() },
+                dataType: "json",
+                success: showdata_login,
+                error: function () {
+                    alert("登入錯誤-api/login_api.php")
                 }
             });
+        });
 
-            // 登入按鈕監聽
-            $("#login_btn").click(function () {
-
-                $.ajax({
-                    type: "POST",
-                    url: "api/login_api.php",
-                    data: { username: $("#login_username").val(), password: $("#login_password").val() },
-                    dataType: "json",
-                    success: showdata_login,
-                    error: function () {
-                        alert("登入錯誤-api/login_api.php")
-                    }
-                });
+        $("#directbuy_login_btn").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "api/login_api.php",
+                data: { username: $("#directbuy_username").val(), password: $("#directbuy_password").val() },
+                dataType: "json",
+                success: showdata_login,
+                error: function () {
+                    alert("登入錯誤-api/login_api.php")
+                }
             });
-
-            $("#directbuy_login_btn").click(function () {
-                $.ajax({
-                    type: "POST",
-                    url: "api/login_api.php",
-                    data: { username: $("#directbuy_username").val(), password: $("#directbuy_password").val() },
-                    dataType: "json",
-                    success: showdata_login,
-                    error: function () {
-                        alert("登入錯誤-api/login_api.php")
-                    }
-                });
-            });
+        });
 
 
 
-            // 登出按鈕監聽
-            $("#s100_logout_btn").click(function () {
-                logout();
-            });
+        // 登出按鈕監聽
+        $("#s100_logout_btn").click(function () {
+            logout();
+        });
         });
 
         // 顯示產品列表

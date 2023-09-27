@@ -141,7 +141,7 @@
                 </div>
                 <div class="col-9">
                     <section id="s300">
-                        <h4 class="text-start branch mt-3 mb-3">商品選購 / 烘焙原料 / <a href="#">鮮奶油</a></h4>
+                        <h4 class="text-start branch mt-3 mb-3">商品選購 / 烘焙原料 / <a href="#">鮮奶</a></h4>
                         <div class="row wow animate__fadeIn" data-wow-delay="0s" data-wow-duration="1.5s"
                             id="productlist">
                             <div class="col-lg-3 col-6 d-flex flex-column product-box mb-5"
@@ -485,7 +485,7 @@
             // 帶入網頁要立刻讀取的資料放 created
             created() {
                 const vm = this;
-                const url = 'api/product/whitebutter_read_api.php';
+                const url = 'api/product/milk_read_api.php';
                 axios.get(url)
                     .then(function (response) {
                         // handle success
@@ -568,11 +568,11 @@
             // 取得麵粉產品資料
             // $.ajax({
             //     type: "GET",
-            //     url: "api/product/whitebutter_read_api.php",
+            //     url: "api/product/milk_read_api.php",
             //     dataType: "json",
-            //     success: showdata_whitebutter,
+            //     success: showdata_milk,
             //     error: function () {
-            //         alert('api/product/whitebutter_read_api.php');
+            //         alert('api/product/milk_read_api.php');
             //     }
             // })
 
@@ -998,7 +998,7 @@
         });
 
         // 顯示產品列表
-        // function showdata_whitebutter(data) {
+        // function showdata_milk(data) {
         //     if (data.state) {
         //         // $("#productlist").empty();
         //         // var $data_No = 1;
