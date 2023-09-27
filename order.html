@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>《Little Baker》烘焙專家</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/viewcolor.css">
+    <link rel="stylesheet" href="css/bakery.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body style="background-image: url(images/manager_bg.jpg); background-attachment: fixed;">
+    <div id="app">
+        <!-- s100 選單 -->
+        <section style="background-color: var(--brown11);">
+            <div class="container">
+                <div class="row">
+                    <div class="col-4 mt-3"><a href="index.html"><img src="images/little_baker.png"
+                                class="logo-change wow" data-wow-delay="0s" data-wow-duration="1s" style="width: 180px;"
+                                id="logo_change"></a></div>
+                    <div class="col-8">
+                        <div class="row mb-3 mt-2">
+                            <div class="col d-flex justify-content-end join-login" style="font-size: 11pt;">
+                                <label id="welcome" class="me-4" style="color: var(--brown13);"></label>
+                                <a href="mycart.html" class="join-login d-block me-1"><i
+                                        class="fa-solid fa-cart-shopping mt-1 me-1" style="color: #383838;"></i>購物車<span
+                                        class="myMOUSE">｜</span></a>
+                                <a href="myorderlist.html" class="join-login d-block me-1" id="gotoOrder">訂單查詢<span
+                                        class="myMOUSE">｜</span></a>
+                                <a href="index.html" class="join-login ms-1" id="s100_logout_btn">登出</a>
+                            </div>
+                        </div>
+                        <div class="row " style="font-size: 14pt;">
+                            <div class="col">
+                                <ul class="nav d-flex justify-content-end mt-5">
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link ms-3 me-3 menu-top wow animate__flipInX"
+                                            data-wow-delay="0s" data-wow-duration="1s">公司資訊</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link ms-3 me-3 menu-top wow animate__flipInX"
+                                            data-wow-delay="0s" data-wow-duration="1.3s">最新消息</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="flour.html" class="nav-link ms-3 me-3 menu-top wow animate__flipInX"
+                                            data-wow-delay="0s" data-wow-duration="1.6s">商品選購</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link ms-3 me-3 menu-top wow animate__flipInX"
+                                            data-wow-delay="0s" data-wow-duration="1.9s">聯絡我們</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="member.html" class="nav-link ms-3 me-3 menu-top wow animate__flipInX"
+                                            data-wow-delay="0s" data-wow-duration="2.2s" id="s100_member_btn">會員管理</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="manager.html" class="nav-link ms-3 me-3 menu-top-selected wow "
+                                            data-wow-delay="0s" data-wow-duration="2.5s" id="s100_manager_btn">管理系統</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- s200 會員資料列表 -->
+        <section class="d-none" id="s200">
+            <div class="container text-center mt-3 wow animate__fadeIn rounded-2" data-wow-delay="0s" data-wow-duration="1.5s" style="background-color: rgba(255, 255, 255, 0.5);">
+                <h4 class="text-start branch pt-3">管理系統 / <a href="#" id="order_system">訂單資料管理</a></h4>
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" href="manager.html" id="member_manage">會員資料管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="product.html" id="product_manage">產品資料管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="order.html" id="order_manage">訂單資料管理</a>
+                    </li>
+                </ul>
+                <div class="row justify-content-center mb-5">
+                    <div class="col-12">
+                        <table class="table table-rwd table-bordered d-block" id="order_list">
+                            <thead>
+                                <tr class="table-top">
+                                    <th width="10%">訂單編號</th>
+                                    <th width="10%">收貨人</th>
+                                    <th width="10%">聯絡電話</th>
+                                    <th width="30%">收貨地址</th>
+                                    <th width="10%">下單時間</th>
+                                    <th width="30%">其它</th>
+                                </tr>
+                            </thead>
+                            <tbody id="order_table" class="align-middle"
+                                v-for="(item, key) in filterData[currentPage]">
+                                <tr class="table-body">
+                                    <td data-th="訂單編號">{{item.OrderNo}}</td>
+                                    <td data-th="收貨人">{{item.Realname}}</td>
+                                    <td data-th="聯絡電話">{{item.Phone}}</td>
+                                    <td data-th="收貨地址">{{item.Address}}</td>
+                                    <td data-th="下單時間">{{item.CreateTime}}</td>
+                                    <td><a href="#" class="btn btn-default me-2" data-bs-toggle="modal"
+                                            data-bs-target="#memberupdateModal" :data-orderno="item.OrderNo"
+                                            :data-products="item.Products" :data-quantities="item.Quantities"
+                                            :data-prices="item.Prices" :data-phone="item.Phone"
+                                            :data-realname="item.Realname" :data-address="item.Address"
+                                            :data-pay="item.Pay" :data-total="item.Total"
+                                            :data-createtime="item.CreateTime" id="order_info_btn">訂單詳細資訊</a><a
+                                            href="#" class="btn btn-light" :data-id="item.id" :data-orderno="item.OrderNo"
+                                            id="order_delete_btn">刪除</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-3 mb-5">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item">
+                            <a class="page-link" href="#" @click.prevent="currentPage = 0">第一頁</a>
+                        </li>
+                        <li class="page-item" v-for="item in filterData.length">
+                            <a class="page-link" href="#" @click.prevent="currentPage = item-1"
+                                :class="{'active' : currentPage == item-1}">{{ item }}</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" @click.prevent="currentPage = totalPage-1">最後一頁</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </section>
+
+
+        <!-- 訂單資料 order modal-->
+        <div class="modal fade" id="memberupdateModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: var(--brown12);">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">訂單資料</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card mt-2 mb-3">
+                            <div class="card-header pt-4">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h5 class="text-start" id="show_orderno">訂單編號：</h5>
+                                    </div>
+                                    <div class="col-6">
+                                        <p class="text-end" id="show_createtime">下單時間：</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body text-center">
+                                <div class="row mb-2 fw700">
+                                    <div class="col-4">產品名稱</div>
+                                    <div class="col-4">訂購數量</div>
+                                    <div class="col-4">價格</div>
+                                </div>
+                                <hr>
+                                <div id="showOrder">
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-4">
+                                            <div id="show_products"></div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div id="show_quantities"></div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div id="show_prices"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer pb-3 text-center">
+                                <div class="row mb-2 fw700">
+                                    <div class="col-2">收貨人</div>
+                                    <div class="col-2">收貨人電話</div>
+                                    <div class="col-4">收貨地址</div>
+                                    <div class="col-2">付款方式</div>
+                                    <div class="col-2">訂單金額</div>
+                                </div>
+                                <div id="showInfo">
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-2" id="show_realname"></div>
+                                        <div class="col-2" id="show_phone"></div>
+                                        <div class="col-4" id="show_address"></div>
+                                        <div class="col-2" id="show_pay"></div>
+                                        <div class="col-2" id="show_total"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">關閉</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-3.7.0.min.js"></script>
+    <script src="https://kit.fontawesome.com/0883c24f92.js" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+    <script src="js/vue-cookies.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <script src="sweetalert2.all.min.js"></script>
+    <script>
+        const App = {
+            data() {
+                return {
+                    data: [], // 所有的資料
+                    currentPage: 0, // 設定一開始進畫面在第幾頁
+                    currentLocation: '',  // 設定目前所選的區域
+                    totalPage: '',
+                    Vue_uid: '',
+                }
+            },
+            // 帶入網頁要立刻讀取的資料放 created
+            created() {
+                const vm = this;
+                const url = 'api/cart/all_order_read_api.php';
+                // const checkUser = 'api/check_uid_api.php';
+                axios.get(url)
+                    .then(function (response) {
+                        // handle success
+                        console.log(response);
+                        vm.data = response.data.data;  // 將撈取到的資料放進 data[] 裡面
+                        vm.Vue_uid = this.getCookie('uid01');
+
+                        if (response.data.data.length % 10 == 0) {
+                            vm.totalPage = response.data.data.length / 10;
+                        } else {
+                            vm.totalPage = parseInt(response.data.data.length / 10) + 1;
+                        }
+
+                        vm.getRegion();
+                    })
+                    .catch(function (error) {
+                        // handle error
+                        console.log(error);
+                    })
+                    .finally(function () {
+                        // always executed
+                    });
+            },
+            computed: {
+                // 製作分頁
+                filterData() {
+                    const vm = this;
+                    let items = []; // 收集決定區域後篩選的資料
+                    if (vm.currentLocation != '') {
+                        // 方法一
+                        // vm.data.forEach((item, key) => {
+                        //     if (item.Add.substring(6, item.Add.indexOf('區', 0) + 1) == vm.currentLocation) {
+                        //         items.push(item)
+                        //     }
+                        // });
+
+
+                        // 方法二
+                        items = vm.data.filter((item, key) => {
+                            return item.Category == vm.currentLocation
+                        });
+                    } else {
+                        // 顯示全部
+                        items = vm.data;
+                    }
+
+
+                    const newData = [];
+                    items.forEach((item, key) => {
+                        // 每二十四筆資料建立一個空格
+                        if (key % 10 == 0) {
+                            newData.push([]);
+                        }
+                        // 取商數，將商數一樣的放進 page 內
+                        const page = parseInt(key / 10);
+                        newData[page].push(item);
+                    });
+                    return newData;
+                }
+            },
+            methods: {
+                getRegion() {
+                    const vm = this;
+
+                    const categories = new Set(); // Set() 一個抽象的資料結構，只能存放唯一一筆資料不會重複
+                    vm.data.forEach((item, key) => {
+                        // 方法一 : 直接斷定字數
+                        // console.log(item.Add.substring(6, 9));
+
+                        // 方法二 : 判斷 "區" 出現的位置在決定抓取的字數
+                        // console.log(item.Add.indexOf('區',0));
+                        // console.log(item.Add.substring(6, item.Add.indexOf('區',0)+1));
+
+                        // push 用於放入陣列資料，Set() 非陣列因此用 add
+                        categories.add(item.Category);
+                    });
+                    vm.categories = Array.from(categories);
+                }
+            }
+        }
+
+        Vue.createApp(App).mount('#app');
+    </script>
+
+    <script>
+        var uid; // for member update
+        var pid; // for product update
+        $(function () {
+            $flag_realname = true;
+            $flag_birthday = true;
+            $flag_phone = true;
+            $flag_email = true;
+            var $tmp_id;
+
+            if (getCookie('uid01') != "") {
+                // uid 存在，傳遞至後端 check_uid_api.php 確認是否合法
+                $.ajax({
+                    type: "POST",
+                    url: "api/check_uid_api.php",
+                    data: { uid: getCookie('uid01') },
+                    dataType: "json",
+                    success: showdata_check_uid,
+                    error: function () {
+                        alert('error-api/check_uid_api.php');
+                    }
+                })
+            } else {
+                //uid是不存在
+                alert("請先登入會員!");
+                location.href = "index.html";
+            };
+
+            // 姓名即時監聽
+            $("#realname").bind("input propertychange", function () {
+                if ($(this).val().length > 1 && $(this).val().length < 9) {
+                    $(this).removeClass("is-invalid");
+                    $(this).addClass("is-valid");
+                    $flag_realname = true;
+                } else {
+                    $(this).removeClass("is-valid");
+                    $(this).addClass("is-invalid");
+                    $flag_realname = false;
+                }
+            });
+            // 生日即時監聽
+            $("#birthday").bind("input propertychange", function () {
+                if ($(this).val() != "") {
+                    $(this).removeClass("is-invalid");
+                    $(this).addClass("is-valid");
+                    $flag_birthday = true;
+                } else {
+                    $(this).removeClass("is-valid");
+                    $(this).addClass("is-invalid");
+                    $flag_birthday = false;
+                }
+            });
+            // 電話即時監聽
+            $("#phone").bind("input propertychange", function () {
+                if ($(this).val().length == 10) {
+                    $(this).removeClass("is-invalid");
+                    $(this).addClass("is-valid");
+                    $flag_phone = true;
+                } else {
+                    $(this).removeClass("is-valid");
+                    $(this).addClass("is-invalid");
+                    $flag_phone = false;
+                }
+            });
+            // 信箱即時監聽
+            $("#email").bind("input propertychange", function () {
+                if (isEmail($(this).val())) {
+                    $(this).removeClass("is-invalid");
+                    $(this).addClass("is-valid");
+                    $flag_email = true;
+                } else {
+                    $(this).removeClass("is-valid");
+                    $(this).addClass("is-invalid");
+                    $flag_email = false;
+                }
+            });
+            function isEmail(email) {
+                var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                if (regex.test(email)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            };
+
+            // 產品資料修改按鈕監聽
+            $("#order_list #order_info_btn").click(function () {
+                var products = $(this).data("products").split(", ").join("<p></p>");
+                var quantities = $(this).data("quantities").split(", ").join("<p></p>");
+                var prices = $(this).data("prices").split(", ").join("<p></p>");
+
+                $("#show_orderno").text("訂單編號：" + $(this).data("orderno"));
+                $("#show_createtime").text("下單時間：" + $(this).data("createtime"));
+                $("#show_products").html(products);
+                $("#show_quantities").html(quantities);
+                $("#show_prices").html(prices);
+                $("#show_realname").text($(this).data("realname"));
+                $("#show_phone").text($(this).data("phone"));
+                $("#show_address").text($(this).data("address"));
+                $("#show_pay").text($(this).data("pay"));
+                $("#show_total").text($(this).data("total"));
+                $("#origin_img").attr('src', 'upload/' + $(this).data("update_photo"));
+                pid = $(this).data("id");
+            });
+
+            $("#s100_logout_btn").click(function () {
+                logout();
+            });
+
+            // 顯示會員資料按鈕
+            // $("#member_manage").click(function () {
+            //     $("#member_manage").addClass("active");
+            //     $("#product_manage").removeClass("active");
+            //     $("#order_manage").removeClass("active");
+            //     $("#member_manage").val("true");
+            //     $("#product_manage").val("false");
+            //     $("#order_manage").val("false");
+            //     $("#member_list").addClass("d-block");
+            //     $("#member_list").removeClass("d-none");
+            //     $("#product_list").addClass("d-none");
+            //     $("#product_list").removeClass("d-block");
+            //     $("#manage_system").text("會員資料管理");
+            // });
+
+            // 顯示產品資料按鈕
+            // $("#product_manage").click(function () {
+            //     $("#product_manage").addClass("active");
+            //     $("#member_manage").removeClass("active");
+            //     $("#product_manage").val("true");
+            //     $("#member_manage").val("false");
+            //     $("#product_list").addClass("d-block");
+            //     $("#product_list").removeClass("d-none");
+            //     $("#member_list").addClass("d-none");
+            //     $("#member_list").removeClass("d-block");
+            //     $("#manage_system").text("產品資料管理");
+            // });
+
+            $("#add_item_btn").click(function () {
+                $flag_category = false;
+                $flag_product = false;
+                $flag_content = false;
+                $flag_price = false;
+                $flag_discount = false;
+                $flag_photo = false;
+            });
+
+            // 產品類別即時監聽
+            $("#add_category").change(function () {
+                if ($("#add_category").val() == '') {
+                    $flag_category = false;
+                } else {
+                    console.log($("#add_category").select().val());
+                    $flag_category = true;
+                }
+            });
+
+            // 產品名稱即時監聽( 前端先檢查字數是否符合，後端再檢查產品是否已重複 )
+            $("#add_product").bind("input propertychange", function () {
+                if ($(this).val().length > 1 && $(this).val().length < 20) {
+
+                    // 檢查帳號是否重複
+                    $.ajax({
+                        type: "POST",
+                        url: "api/product_check_api.php",
+                        data: { product: $("#add_product").val() },
+                        dataType: "json",
+                        success: showdata_uniproduct,
+                        error: function () {
+                            alert("產品確認錯誤-api/product_check_api.php");
+                        }
+                    });
+                } else {
+                    $("#invalid_message").text("字數不符，請輸入 2 - 20 位英文或數字");
+                    $(this).removeClass("is-valid");
+                    $(this).addClass("is-invalid");
+                    $flag_product = false;
+                }
+            });
+
+            // 產品價格即時監聽
+            $("#add_price").bind("input propertychange", function () {
+                if ($(this).val() > 0 && $(this).val() < 10001) {
+                    $(this).removeClass("is-invalid");
+                    $(this).addClass("is-valid");
+                    $flag_price = true;
+                } else {
+                    $(this).removeClass("is-valid");
+                    $(this).addClass("is-invalid");
+                    $flag_price = false;
+                }
+            });
+
+            // 會員價即時監聽
+            $("#add_discount").bind("input propertychange", function () {
+                if ($(this).val() > 0 && $(this).val() < 10001) {
+                    $(this).removeClass("is-invalid");
+                    $(this).addClass("is-valid");
+                    $flag_discount = true;
+                } else {
+                    $(this).removeClass("is-valid");
+                    $(this).addClass("is-invalid");
+                    $flag_discount = false;
+                }
+            });
+
+
+            // 產品內容即時監聽
+            $("#add_content").bind("input propertychange", function () {
+                if ($(this).val().length > 1 && $(this).val().length < 101) {
+                    $(this).removeClass("is-invalid");
+                    $(this).addClass("is-valid");
+                    $flag_content = true;
+                } else {
+                    $(this).removeClass("is-valid");
+                    $(this).addClass("is-invalid");
+                    $flag_content = false;
+                }
+            });
+
+
+            // 上傳圖片預覽
+            $("#fileupload").change(function () {
+                // 取得要上傳的檔案資料
+                // console.log(fileupload);
+                // 顯示檔案 name, type, size 等資訊
+                console.log(fileupload.files[0]);
+                // 指定顯示檔案 type
+                // console.log(fileupload.files[0].type);  
+                // 預覽圖片
+                console.log(URL.createObjectURL(fileupload.files[0]));
+
+                // 檢查檔案格式是否符合，若符合顯示預覽
+                if (fileupload.files[0].type == 'image/png' || fileupload.files[0].type == 'image/jpeg') {
+                    $("#preimg").removeClass('d-none');
+                    $("#preimg").attr('src', URL.createObjectURL(fileupload.files[0]));
+                    $flag_photo = true;
+                } else {
+                    alert("只支援jpeg或png格式圖片！請重新上傳");
+                    $("#preimg").addClass('d-none');
+                    $flag_photo = false;
+                }
+            });
+
+            // 確認產品新增按鈕
+            $("#add_comfirm_btn").click(function () {
+                if ($flag_category && $flag_product && $flag_content && $flag_price && $flag_discount && $flag_photo) {
+                    var formData = new FormData();
+                    formData.append('category', $("#add_category").select().val());
+                    formData.append('product', $("#add_product").val());
+                    formData.append('price', $("#add_price").val());
+                    formData.append('discount', $("#add_discount").val());
+                    formData.append('content', $("#add_content").val());
+                    formData.append('file', fileupload.files[0]);
+                    $.ajax({
+                        type: "POST",
+                        url: "api/product/product_create_api.php",
+                        data: formData,
+                        dataType: "json",
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: showdata_uploadFile,
+                        error: function () {
+                            alert("產品新增錯誤-api/product/product_create_api.php")
+                        }
+                    });
+                } else {
+                    alert("資料不完整或不符規定");
+                }
+            });
+
+            function showdata_uploadFile(data) {
+                alert(data.message);
+                $("#additemModal").modal("hide");
+                $("#add_product").removeClass("is-valid");
+                $("#add_price").removeClass("is-valid");
+                $("#add_discount").removeClass("is-valid");
+                $("#add_content").removeClass("is-valid");
+                $("#preimg").addClass('d-none');
+                // 重新載入產品列表
+                $.ajax({
+                    type: "GET",
+                    url: "api/product/product_read_api.php",
+                    dataType: "json",
+                    async: false,
+                    success: showdata_product,
+                    error: function () {
+                        alert("錯誤-api/product/product_read_api.php");
+                    }
+                });
+            };
+
+        })
+
+        // 檢查產品是否存在
+        function showdata_uniproduct(data) {
+            if (data.state) {
+                $("#valid_message").text("");
+                $("#add_product").removeClass("is-invalid");
+                $("#add_product").addClass("is-valid");
+                $flag_product = true;
+            } else {
+                // 帳號已存在
+                $("#invalid_message").text("已有相同名稱產品");
+                $("#add_product").removeClass("is-valid");
+                $("#add_product").addClass("is-invalid");
+                $flag_product = false;
+            }
+        }
+
+        // 檢查更新的產品是否存在
+        function showdata_uniproduct02(data) {
+            if (data.state) {
+                $("#valid_message02").text("");
+                $("#update_product").removeClass("is-invalid");
+                $("#update_product").addClass("is-valid");
+                $flag_product = true;
+            } else {
+                // 帳號已存在
+                $("#invalid_message02").text("已有相同名稱產品");
+                $("#update_product").removeClass("is-valid");
+                $("#update_product").addClass("is-invalid");
+                $flag_product = false;
+            }
+        }
+
+        function showdata_member(data) {
+            // console.log(data.data[0]);
+            if (data.state) {
+                // $("#member_table").empty();
+                data.data.forEach(function (item) {
+                    // console.log(item);
+
+                    if (item.UserState == 'true') {
+                        if (item.id == $tmp_id || item.id == 1) {
+                            var switch01 = '<div class="mb-3 form-check form-switch"><input type="checkbox" class="form-check-input" role="switch" checked id="switch01" data-id="' + item.id + '" disabled><label for="" class="form-check-label text-start">啟用</label></div>';
+                        } else {
+                            var switch01 = '<div class="mb-3 form-check form-switch"><input type="checkbox" class="form-check-input" role="switch" checked id="switch01" data-id="' + item.id + '"><label for="" class="form-check-label text-start">啟用</label></div>';
+                        }
+                    } else if (item.UserState == 'false') {
+                        var switch01 = '<div class="mb-3 form-check form-switch"><input type="checkbox" class="form-check-input" role="switch" id="switch01" data-id="' + item.id + '"><label for="" class="form-check-label text-start">停權</label></div>';
+                    }
+
+                    if (item.IsAdmin == 'true') {
+                        if (item.id == $tmp_id || item.id == 1) {
+                            var admin = '<div class="mb-3 form-check form-switch"><input type="checkbox" class="form-check-input" role="switch" checked id="isadmin" data-id="' + item.id + '" disabled><label for="" class="form-check-label">是</label></div>';
+                        } else {
+                            var admin = '<div class="mb-3 form-check form-switch"><input type="checkbox" class="form-check-input" role="switch" checked id="isadmin" data-id="' + item.id + '"><label for="" class="form-check-label">是</label></div>';
+                        }
+                    } else if (item.IsAdmin == 'false') {
+                        var admin = '<div class="mb-3 form-check form-switch"><input type="checkbox" class="form-check-input" role="switch" id="isadmin" data-id="' + item.id + '"><label for="" class="form-check-label text-start">否</label></div>';
+                    }
+
+
+                    var strHTML = '<tr class="table-body"><td data-th="編號">' + item.id + '</td><td data-th="帳號">' + item.Username + '</td><td data-th="姓名">' + item.Realname + '</td><td data-th="生日">' + item.Birthday + '</td><td data-th="電話">' + item.Phone + '</td><td data-th="E-mail">' + item.Email + '</td><td data-th="建檔時間">' + item.CreateTime + '</td><td>' + switch01 + '</td><td>' + admin + '</td><td><a href="#" class="btn btn-default me-2" data-bs-toggle="modal" data-bs-target="#memberupdateModal" data-id="' + item.id + '" data-username="' + item.Username + '" data-realname="' + item.Realname + '" data-birthday="' + item.Birthday + '" data-phone="' + item.Phone + ' " data-email="' + item.Email + '" id="member_update_btn">修改</a><a href="#" class="btn btn-light" data-id="' + item.id + '" data-username="' + item.Username + '" id="member_delete_btn">刪除</a></td></tr>';
+
+                    // $("#member_table").append(strHTML);
+                })
+            } else {
+                alert(data.message);
+            }
+        }
+
+        function showdata_product(data) {
+            if (data.state) {
+                $("#product_table").empty();
+                data.data.forEach(function (item) {
+                    // console.log(item);
+                    if (item.Sell == 'true') {
+                        var switch02 = '<div class="mb-3 form-check form-switch"><input type="checkbox" class="form-check-input" role="switch" checked id="switch02" data-id="' + item.id + '"><label for="" class="form-check-label text-start">上架</label></div>';
+                    } else if (item.Sell == 'false') {
+                        var switch02 = '<div class="mb-3 form-check form-switch"><input type="checkbox" class="form-check-input" role="switch" id="switch02" data-id="' + item.id + '"><label for="" class="form-check-label text-start">停售</label></div>';
+                    }
+
+
+                    var strHTML = '<tr class="table-body"><td data-th="編號">' + item.id + '</td><td data-th="類別">' + item.Category + '</td><td data-th="產品圖" class="product-box"><img src="upload/' + item.Photo + '" class="w-100"></td><td data-th="產品名稱">' + item.Product + '</td><td data-th="產品價格">' + item.Price + '</td><td data-th="會員價">' + item.Discount + '</td><td data-th="產品資訊">' + item.Content + '</td><td>' + switch02 + '</td><td><a href="#" class="btn btn-default me-2" data-bs-toggle="modal" data-bs-target="#productupdateModal" data-id="' + item.id + '" data-update_category="' + item.Category + '" data-update_product="' + item.Product + '" data-update_price="' + item.Price + '" data-update_discount="' + item.Discount + '" data-update_content="' + item.Content + '" data-update_photo="' + item.Photo + ' " id="product_update_btn">修改</a><a href="#" class="btn btn-light" data-id="' + item.id + '" data-product="' + item.Product + '" id="product_delete_btn">刪除</a></td></tr>';
+
+                    $("#product_table").append(strHTML);
+                })
+            } else {
+                alert(data.message);
+            }
+        }
+
+
+        function showdata_member_update(data) {
+            // console.log(data);
+            if (data.state) {
+                alert(data.message);
+                location.href = "manager.html";
+            } else {
+                alert(data.message);
+            }
+        }
+
+        function showdata_product_update(data) {
+            if (data.state) {
+                alert(data.message);
+
+                $("#productupdateModal").modal("hide");
+                // 重新載入產品列表
+                $.ajax({
+                    type: "GET",
+                    url: "api/product/product_read_api.php",
+                    dataType: "json",
+                    async: false,
+                    success: showdata_product,
+                    error: function () {
+                        alert("錯誤-api/product/product_read_api.php");
+                    }
+                });
+            } else {
+                alert(data.message);
+            }
+        }
+
+
+        function showdata_order_delete(data) {
+            if (data.state) {
+                alert(data.message);
+                location.reload();
+            } else {
+                alert(data.message);
+            }
+        }
+
+        function showdata_product_delete(data) {
+            if (data.state) {
+                alert(data.message);
+                $.ajax({
+                    type: "GET",
+                    url: "api/product/product_read_api.php",
+                    dataType: "json",
+                    async: false,
+                    success: showdata_product,
+                    error: function () {
+                        alert("錯誤-api/product/product_read_api.php");
+                    }
+                });
+            } else {
+                alert(data.message);
+            }
+        }
+
+        function showdata_check_uid(data) {
+            if (data.state) {
+                // 驗證成功，表示已登入
+                // 顯示歡迎詞
+                $("#welcome").text("歡迎 " + data.data[0].Realname + "，您好");
+                $tmp_id = data.data[0].id;
+
+                // 確定是管理身分後才可顯示會員列表
+                $("#s200").addClass("d-block");
+                $("#s200").removeClass("d-none");
+
+
+                if (data.data[0].IsAdmin == 'true') {
+
+                    // 顯示會員列表
+                    $.ajax({
+                        type: "GET",
+                        url: "api/admin/member_read_api.php",
+                        dataType: "json",
+                        async: false,
+                        success: showdata_member,
+                        error: function () {
+                            alert("錯誤-api/admin/member_read_api.php");
+                        }
+                    });
+
+                    // 會員資料修改按鈕監聽
+                    $("#member_table #member_update_btn").click(function () {
+                        $("#username").val($(this).data("username"));
+                        $("#realname").val($(this).data("realname"));
+                        $("#birthday").val($(this).data("birthday"));
+                        $("#phone").val($(this).data("phone"));
+                        $("#email").val($(this).data("email"));
+                        $("#isadmin").val($(this).data("isadmin"));
+                        uid = $(this).data("id");
+                    });
+
+                    $("#member_confirm_btn").click(function () {
+                        // console.log($("#realname").val());
+                        // console.log($("#birthday").val());
+                        // console.log($("#phone").val());
+                        // console.log($("#email").val());
+                        // console.log(uid);
+
+                        if ($flag_realname && $flag_birthday && $flag_phone && $flag_email) {
+                            $.ajax({
+                                type: "POST",
+                                url: "api/admin/member_update_api.php",
+                                data: { realname: $("#realname").val(), birthday: $("#birthday").val(), phone: $("#phone").val(), email: $("#email").val(), id: uid },
+                                dataType: "json",
+                                success: showdata_member_update,
+                                error: function () {
+                                    alert("error-api/admin/member_update_api.php");
+                                }
+                            });
+                        } else {
+                            alert("資料不完整或不符規定");
+                        }
+
+                    });
+
+                    // 刪除訂單
+                    $("#order_table #order_delete_btn").click(function () {
+                        // console.log($(this).data("id"));
+                        // console.log($(this).data("username"));
+                        if (confirm("確認刪除 " + $(this).data("orderno") + " 此筆訂單 ?")) {
+                            $.ajax({
+                                type: "POST",
+                                url: "api/cart/order_delete_api.php",
+                                data: { id: $(this).data("id") },
+                                dataType: "json",
+                                success: showdata_order_delete,
+                                error: function () {
+                                    alert("error-api/cart/order_delete_api.php");
+                                }
+                            });
+                        }
+                    });
+
+                    // 顯示產品列表
+                    $.ajax({
+                        type: "GET",
+                        url: "api/product/product_read_api.php",
+                        dataType: "json",
+                        async: false,
+                        success: showdata_product,
+                        error: function () {
+                            alert("錯誤-api/product/product_read_api.php");
+                        }
+                    });
+
+                    // 產品資料修改按鈕監聽
+                    $("#product_table #product_update_btn").click(function () {
+                        $("#update_category").val($(this).data("update_category"));
+                        $("#update_product").val($(this).data("update_product"));
+                        $("#update_price").val($(this).data("update_price"));
+                        $("#update_discount").val($(this).data("update_discount"));
+                        $("#update_content").val($(this).data("update_content"));
+                        $("#origin_img").attr('src', 'upload/' + $(this).data("update_photo"));
+                        pid = $(this).data("id");
+                    });
+
+                    // 產品類別更新即時監聽
+                    $("#update_category").bind("input propertychange", function () {
+                        if ($(this).val().length > 1 && $(this).val().length < 11) {
+
+                            $(this).removeClass("is-invalid");
+                            $(this).addClass("is-valid");
+                            $flag_category = true;
+                        } else {
+                            $(this).removeClass("is-valid");
+                            $(this).addClass("is-invalid");
+                            $flag_category = false;
+                        }
+                    });
+
+                    // 產品名稱更新即時監聽( 前端先檢查字數是否符合，後端再檢查產品是否已重複 )
+                    $("#update_product").bind("input propertychange", function () {
+                        if ($(this).val().length > 1 && $(this).val().length < 20) {
+                            // 檢查產品是否重複
+                            $.ajax({
+                                type: "POST",
+                                url: "api/product_check_api.php",
+                                data: { product: $("#update_product").val() },
+                                dataType: "json",
+                                success: showdata_uniproduct02,
+                                error: function () {
+                                    alert("產品確認錯誤-api/product_check_api.php");
+                                }
+                            });
+                        } else {
+                            $("#invalid_message02").text("字數不符，請輸入 2 - 20 位英文或數字");
+                            $(this).removeClass("is-valid");
+                            $(this).addClass("is-invalid");
+                            $flag_product = false;
+                        }
+                    });
+
+                    // 產品價格更新即時監聽
+                    $("#update_price").bind("input propertychange", function () {
+                        if ($(this).val() > 0 && $(this).val() < 10001) {
+                            $(this).removeClass("is-invalid");
+                            $(this).addClass("is-valid");
+                            $flag_price = true;
+                        } else {
+                            $(this).removeClass("is-valid");
+                            $(this).addClass("is-invalid");
+                            $flag_price = false;
+                        }
+                    });
+
+                    // 會員價更新即時監聽
+                    $("#update_discount").bind("input propertychange", function () {
+                        if ($(this).val() > 0 && $(this).val() < 10001) {
+                            $(this).removeClass("is-invalid");
+                            $(this).addClass("is-valid");
+                            $flag_discount = true;
+                        } else {
+                            $(this).removeClass("is-valid");
+                            $(this).addClass("is-invalid");
+                            $flag_discount = false;
+                        }
+                    });
+
+
+                    // 產品內容更新即時監聽
+                    $("#update_content").bind("input propertychange", function () {
+                        if ($(this).val().length > 1 && $(this).val().length < 101) {
+                            $(this).removeClass("is-invalid");
+                            $(this).addClass("is-valid");
+                            $flag_content = true;
+                        } else {
+                            $(this).removeClass("is-valid");
+                            $(this).addClass("is-invalid");
+                            $flag_content = false;
+                        }
+                    });
+
+
+                    // 上傳更新圖片預覽
+                    $("#newfileupload").change(function () {
+                        // 取得要上傳的檔案資料
+                        // console.log(fileupload);
+                        // 顯示檔案 name, type, size 等資訊
+                        console.log(newfileupload.files[0]);
+                        // 指定顯示檔案 type
+                        // console.log(fileupload.files[0].type);  
+                        // 預覽圖片
+                        console.log(URL.createObjectURL(newfileupload.files[0]));
+
+                        // 檢查檔案格式是否符合，若符合顯示預覽
+                        if (newfileupload.files[0].type == 'image/png' || newfileupload.files[0].type == 'image/jpeg') {
+                            $("#update_img").attr('src', URL.createObjectURL(newfileupload.files[0]));
+                            $("#update_img").removeClass('d-none');
+                            $flag_photo = true;
+                        } else {
+                            alert("只支援jpeg或png格式圖片！請重新上傳");
+                            $("#update_img").addClass('d-none');
+                            $flag_photo = false;
+                        }
+                    });
+
+                    $("#product_confirm_btn").click(function () {
+                        $flag_category = true;
+                        $flag_product = true;
+                        $flag_content = true;
+                        $flag_price = true;
+                        $flag_discount = true;
+                        $flag_photo = true;
+
+                        if ($flag_category && $flag_product && $flag_price && $flag_discount && $flag_content && $flag_photo) {
+                            if ($("#newfileupload").val() != '') {
+                                var formData = new FormData();
+                                formData.append('id', pid);
+                                formData.append('category', $("#update_category").val());
+                                formData.append('product', $("#update_product").val());
+                                formData.append('price', $("#update_price").val());
+                                formData.append('discount', $("#update_discount").val());
+                                formData.append('content', $("#update_content").val());
+                                formData.append('file', newfileupload.files[0]);
+
+                                $.ajax({
+                                    type: "POST",
+                                    url: "api/product/product_update_api.php",
+                                    data: formData,
+                                    dataType: "json",
+                                    cache: false,
+                                    contentType: false,
+                                    processData: false,
+                                    success: showdata_product_update,
+                                    error: function () {
+                                        alert("產品新增錯誤-api/product/product_update_api.php")
+                                    }
+                                });
+                            } else {
+                                var nophotoData = new FormData();
+                                nophotoData.append('id', pid);
+                                nophotoData.append('category', $("#update_category").val());
+                                nophotoData.append('product', $("#update_product").val());
+                                nophotoData.append('price', $("#update_price").val());
+                                nophotoData.append('discount', $("#update_discount").val());
+                                nophotoData.append('content', $("#update_content").val());
+
+                                $.ajax({
+                                    type: "POST",
+                                    url: "api/product/nophoto_update_api.php",
+                                    data: nophotoData,
+                                    dataType: "json",
+                                    cache: false,
+                                    contentType: false,
+                                    processData: false,
+                                    success: showdata_product_update,
+                                    error: function () {
+                                        alert("產品新增錯誤-api/product/nophoto_update_api.php")
+                                    }
+                                });
+                            }
+
+                        } else {
+                            alert("資料不完整或不符規定");
+                        };
+
+                    });
+
+                    // 刪除產品
+                    $("#product_table #product_delete_btn").click(function () {
+                        // console.log($(this).data("id"));
+                        // console.log($(this).data("username"));
+                        if (confirm("確認刪除 " + $(this).data("product") + "?")) {
+                            $.ajax({
+                                type: "POST",
+                                url: "api/product/product_delete_api.php",
+                                data: { id: $(this).data("id") },
+                                dataType: "json",
+                                success: showdata_product_delete,
+                                error: function () {
+                                    alert("error-api/product/product_delete_api.php");
+                                }
+                            });
+                        }
+                    });
+
+
+                    //監聽 switch01 會員啟用/停權
+                    $("#member_table #switch01").change(function () {
+                        var userstate, state_id;
+                        if ($(this).is(':checked')) {
+                            userstate = 'true';
+                            state_id = $(this).data('id');
+                            //console.log(userstate + $(this).data('id'));
+                            $(this).next().text('啟用');
+                        } else {
+                            userstate = 'false';
+                            state_id = $(this).data('id');
+                            //console.log(userstate + $(this).data('id'));
+                            $(this).next().text('停權');
+                        }
+
+                        // 傳遞 id 和 啟用/停權 至後端更新會員狀態
+                        $.ajax({
+                            type: "POST",
+                            url: "api/admin/member_userstate_api.php",
+                            data: { id: state_id, userstate: userstate },
+                            dataType: "json",
+                            success: showdata_userstate,
+                            error: function () {
+                                alert("error-api/admin/member_userstate_api.php");
+                            }
+                        })
+                    });
+
+                    $("#member_table #isadmin").change(function () {
+                        var isadmin, state_id;
+                        if ($(this).is(':checked')) {
+                            isadmin = 'true';
+                            state_id = $(this).data('id');
+                            //console.log(userstate + $(this).data('id'));
+                            $(this).next().text('是');
+                        } else {
+                            isadmin = 'false';
+                            state_id = $(this).data('id');
+                            //console.log(userstate + $(this).data('id'));
+                            $(this).next().text('否');
+                        }
+
+                        // 傳遞 id 和 管理者權限 至後端更新會員狀態
+                        $.ajax({
+                            type: "POST",
+                            url: "api/admin/member_isadmin_api.php",
+                            data: { id: state_id, isadmin: isadmin },
+                            dataType: "json",
+                            success: showdata_isadmin,
+                            error: function () {
+                                alert("error-api/admin/member_isadmin_api.php");
+                            }
+                        })
+                    });
+
+                    //監聽 switch02 產品上架/停售
+                    $("#product_table #switch02").change(function () {
+                        var sellstate, state_id;
+                        if ($(this).is(':checked')) {
+                            sellstate = 'true';
+                            state_id = $(this).data('id');
+                            //console.log(sellstate + $(this).data('id'));
+                            $(this).next().text('上架');
+                        } else {
+                            sellstate = 'false';
+                            state_id = $(this).data('id');
+                            //console.log(sellstate + $(this).data('id'));
+                            $(this).next().text('停售');
+                        }
+
+                        // 傳遞 id 和 上架/停售 至後端更新會員狀態
+                        $.ajax({
+                            type: "POST",
+                            url: "api/product/product_state_api.php",
+                            data: { id: state_id, sellstate: sellstate },
+                            dataType: "json",
+                            success: showdata_sellstate,
+                            error: function () {
+                                alert("error-api/product/product_state_api.php");
+                            }
+                        })
+                    });
+
+                } else {
+                    alert("無讀取權限");
+                    location.href = "index.html";
+                }
+
+            } else {
+                // 驗證失敗，需重新登入
+                $("#loginModal").modal("show");
+            }
+        }
+
+        // 設定 cookie
+
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        // 取得 cookie
+        function getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function showdata_userstate(data) {
+            //console.log(data);
+            if (data.state) {
+                alert(data.message);
+            } else {
+                alert(data.message);
+            }
+        }
+
+        function showdata_sellstate(data) {
+            //console.log(data);
+            if (data.state) {
+                alert(data.message);
+            } else {
+                alert(data.message);
+            }
+        }
+
+        function showdata_isadmin(data) {
+            //console.log(data);
+            if (data.state) {
+                alert(data.message);
+            } else {
+                alert(data.message);
+            }
+        }
+
+        // 登出帳號 (刪除 uid 並重整畫面)
+        function logout() {
+            if (confirm("確定要登出嗎") == true) {
+                setCookie('uid01', '', 7);
+                location.href = "index.html";
+            }
+        }
+
+    </script>
+
+    <!-- 資料欄位清空 -->
+    <script>
+        $("#additemModal").on("hidden.bs.modal", function () {
+            $(this).find("form").trigger("reset");
+        })
+
+    </script>
+
+    <!-- 移動特效 -->
+    <script src="js/wow.min.js"></script>
+    <script>
+        new WOW().init();
+    </script>
+
+    <!-- Logo 動畫特效 -->
+    <script>
+        $("#logo_change").mouseenter(function () {
+            $(this).addClass("animate__jello");
+        });
+        $("#logo_change").mouseleave(function () {
+            $(this).removeClass("animate__jello");
+        });
+    </script>
+</body>
+
+</html>

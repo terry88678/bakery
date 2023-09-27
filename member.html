@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>《Little Baker》烘焙專家</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/viewcolor.css">
+    <link rel="stylesheet" href="css/bakery.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+</head>
+
+<body style="background-image: url(images/member_bg.jpg); background-attachment: fixed;">
+    <!-- s100 選單 -->
+    <section style="background-color: var(--brown11);">
+        <div class="container">
+            <div class="row">
+                <div class="col-4 mt-3"><a href="index.html"><img src="images/little_baker.png" class="logo-change wow" data-wow-delay="0s"
+                    data-wow-duration="1s" style="width: 180px;" id="logo_change"></a></div>
+                <div class="col-8">
+                    <div class="row mb-3 mt-2">
+                        <div class="col d-flex justify-content-end join-login" style="font-size: 11pt;">
+                            <label id="welcome" class="me-4" style="color: var(--brown13);"></label>
+                                <a href="mycart.html" class="join-login d-block me-1"><i class="fa-solid fa-cart-shopping mt-1 me-1" style="color: #383838;"></i>購物車<span class="myMOUSE">｜</span></a>
+                                <a href="myorderlist.html" class="join-login d-block me-1" id="gotoOrder">訂單查詢<span
+                                    class="myMOUSE">｜</span></a>
+                            <a href="index.html" class="join-login ms-1" id="s100_logout_btn">登出</a>
+                        </div>
+                    </div>
+                    <div class="row " style="font-size: 14pt;">
+                        <div class="col">
+                            <ul class="nav d-flex justify-content-end mt-5">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link ms-3 me-3 menu-top wow animate__flipInX" data-wow-delay="0s"
+                                    data-wow-duration="1s">公司資訊</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link ms-3 me-3 menu-top wow animate__flipInX" data-wow-delay="0s"
+                                    data-wow-duration="1.3s">最新消息</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="flour.html" class="nav-link ms-3 me-3 menu-top wow animate__flipInX" data-wow-delay="0s"
+                                    data-wow-duration="1.6s">商品選購</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link ms-3 me-3 menu-top wow animate__flipInX" data-wow-delay="0s"
+                                    data-wow-duration="1.9s">聯絡我們</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="member.html" class="nav-link ms-3 me-3 menu-top-selected wow " data-wow-delay="0s"
+                                    data-wow-duration="2.2s" id="s100_member_btn">會員管理</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="manager.html" class="nav-link ms-3 me-3 menu-top d-none wow animate__flipInX" data-wow-delay="0s"
+                                    data-wow-duration="2.2s" id="s100_manager_btn">管理系統</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- s300 個人資料管理 -->
+    <div class="container text-center wow animate__fadeIn" data-wow-delay="0s" data-wow-duration="1.5s">
+        <div class="row justify-content-center" style="height: 100vh;">
+            <div class="col-3">
+                <div class="list-group menu-side m-4">
+                    <ul class="list-group">
+                        <a href="member.html" class="pt-3 sort-item">個人資料管理</a>
+                    </ul>
+                    <hr>
+                    <ul class="list-group">
+                        <a href="mycart.html" class="pb-3 sort-item">訂單資料管理</a>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-9 mt-3">
+                <h4 class="text-start branch">會員管理 / <a href="member.html">個人資料管理</a></h4>
+                <table class="table table-rwd table-bordered w-100">
+                    <thead class="table-top">
+                        <tr>
+                            <th colspan="2">個人資料管理</th>
+                        </tr>
+                    </thead>
+                    <tbody id="member_info" class="table-body">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- update modal-->
+    <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modal-top">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">個人資料修改</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">帳號</label>
+                        <input type="text" class="form-control" placeholder="6 - 12 個字" id="username" name="username"
+                            disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="realname" class="form-label">姓名</label>
+                        <input type="text" class="form-control" placeholder=" 2 - 8 個字" id="realname" name="realname">
+                        <div class="valid-feedback">輸入正確</div>
+                        <div class="invalid-feedback">請輸入 2 - 8 字</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="birthday" class="form-label">生日</label>
+                        <input type="date" class="form-control" id="birthday" name="birthday">
+                        <div class="valid-feedback">輸入正確</div>
+                        <div class="invalid-feedback">請選擇您的出生年月日</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">電話</label>
+                        <input type="text" class="form-control" placeholder="手機號碼" id="phone" name="phone">
+                        <div class="valid-feedback">電話輸入正確</div>
+                        <div class="invalid-feedback">請輸入 10 位數字</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">E-mail</label>
+                        <input type="text" class="form-control" id="email" name="email">
+                        <div class="valid-feedback">信箱輸入正確</div>
+                        <div class="invalid-feedback">請檢查您的信箱是否輸入正確</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="confirm_btn">確認更新</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery-3.7.0.min.js"></script>
+    <script src="https://kit.fontawesome.com/0883c24f92.js" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+
+    <script>
+        var uid; // for update
+        $(function () {
+            $flag_realname = true;
+            $flag_birthday = true;
+            $flag_phone = true;
+            $flag_email = true;
+
+            if (getCookie('uid01') != "") {
+                // uid 存在，傳遞至後端 check_uid_api.php 確認是否合法
+                $.ajax({
+                    type: "POST",
+                    url: "api/member/info_read_api.php",
+                    data: { uid: getCookie('uid01') },
+                    dataType: "json",
+                    success: showdata_info_uid,
+                    error: function () {
+                        alert('error-api/member/info_read_api.php');
+                    }
+                })
+            } else {
+                //uid是不存在
+                alert("請先登入會員!");
+                location.href = "index.html";
+            };
+
+            // 姓名即時監聽
+            $("#realname").bind("input propertychange", function () {
+                if ($(this).val().length > 1 && $(this).val().length < 9) {
+                    $(this).removeClass("is-invalid");
+                    $(this).addClass("is-valid");
+                    $flag_realname = true;
+                } else {
+                    $(this).removeClass("is-valid");
+                    $(this).addClass("is-invalid");
+                    $flag_realname = false;
+                }
+            });
+            // 生日即時監聽
+            $("#birthday").bind("input propertychange", function () {
+                if ($(this).val() != "") {
+                    $(this).removeClass("is-invalid");
+                    $(this).addClass("is-valid");
+                    $flag_birthday = true;
+                } else {
+                    $(this).removeClass("is-valid");
+                    $(this).addClass("is-invalid");
+                    $flag_birthday = false;
+                }
+            });
+            // 電話即時監聽
+            $("#phone").bind("input propertychange", function () {
+                if ($(this).val().length == 10) {
+                    $(this).removeClass("is-invalid");
+                    $(this).addClass("is-valid");
+                    $flag_phone = true;
+                } else {
+                    $(this).removeClass("is-valid");
+                    $(this).addClass("is-invalid");
+                    $flag_phone = false;
+                }
+            });
+            // 信箱即時監聽
+            $("#email").bind("input propertychange", function () {
+                if (isEmail($(this).val())) {
+                    $(this).removeClass("is-invalid");
+                    $(this).addClass("is-valid");
+                    $flag_email = true;
+                } else {
+                    $(this).removeClass("is-valid");
+                    $(this).addClass("is-invalid");
+                    $flag_email = false;
+                }
+            });
+            function isEmail(email) {
+                var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                if (regex.test(email)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            };
+
+
+            $("#s100_logout_btn").click(function () {
+                logout();
+            });
+
+
+
+        })
+
+        function showdata_update(data) {
+            console.log(data);
+            if (data.state) {
+                alert(data.message);
+                location.href = "member.html";
+            } else {
+                alert(data.message);
+            }
+        }
+
+        // function showdata_delete(data) {
+        //     if (data.state) {
+        //         alert(data.message);
+        //         location.href = "member.html";
+        //     } else {
+        //         alert(data.message);
+        //     }
+        // }
+
+        function showdata_info_uid(data) {
+            if (data.state) {
+
+                console.log(data.data[0].IsAdmin);
+                if (data.data[0].IsAdmin == "true") {
+                    $("#s100_manager_btn").removeClass("d-none");
+                    $("#s100_manager_btn").addClass("d-block");
+                }
+                // 驗證成功，表示已登入
+                // 顯示歡迎詞
+                $("#welcome").text("歡迎 " + data.data[0].Realname + "，您好");
+
+                // 顯示會員列表
+                data.data.forEach(function (item) {
+                    // console.log(item);
+
+                    var strHTML = '<tr><td>帳號</td><td data-th="帳號">' + item.Username + '</td></tr><tr><td>姓名</td><td data-th="姓名">' + item.Realname + '</td></tr><tr><td>生日</td><td data-th="生日">' + item.Birthday + '</td></tr><tr><td>電話</td><td data-th="電話">' + item.Phone + '</td></tr><tr><td>E-mail</td><td data-th="E-mail">' + item.Email + '</td></tr><tr><td>加入時間</td><td data-th="建檔時間">' + item.CreateTime + '</td></tr><tr><td colspan="2"><a href="#" class="btn btn-default me-2" data-bs-toggle="modal" data-bs-target="#updateModal" id="update_btn">個人資料修改</a></td></tr>';
+
+                    $("#member_info").append(strHTML);
+                })
+
+
+                // 會員資料修改完成
+                $("#member_info #update_btn").click(function () {
+                    $("#username").val(data.data[0].Username);
+                    $("#realname").val(data.data[0].Realname);
+                    $("#birthday").val(data.data[0].Birthday);
+                    $("#phone").val(data.data[0].Phone);
+                    $("#email").val(data.data[0].Email);
+                    uid = $(this).data("id");
+                });
+
+                // 刪除會員
+                // $("#member_info #delete_btn").click(function () {
+                //     console.log($(this).data("id"));
+                //     console.log($(this).data("username"));
+                //     if (confirm("確認刪除 " + $(this).data("username") + "?")) {
+                //         $.ajax({
+                //             type: "POST",
+                //             url: "api/member/member_delete_api.php",
+                //             data: { id: $(this).data("id") },
+                //             dataType: "json",
+                //             success: showdata_delete,
+                //             error: function () {
+                //                 alert("error-api/member/member_delete_api.php");
+                //             }
+                //         });
+                //     }
+                // });
+
+                $("#confirm_btn").click(function () {
+                    console.log($("#realname").val());
+                    console.log($("#birthday").val());
+                    console.log($("#phone").val());
+                    console.log($("#email").val());
+                    console.log(data.data[0].id);
+
+                    if ($flag_realname && $flag_birthday && $flag_phone && $flag_email) {
+                        $.ajax({
+                            type: "POST",
+                            url: "api/member/info_update_api.php",
+                            data: { realname: $("#realname").val(), birthday: $("#birthday").val(), phone: $("#phone").val(), email: $("#email").val(), id: data.data[0].id },
+                            dataType: "json",
+                            success: showdata_update,
+                            error: function () {
+                                alert("error-api/member/info_update_api.php");
+                            }
+                        });
+                    } else {
+                        alert("資料不完整或不符規定");
+                    }
+
+                });
+
+                //監聽switch 啟用/停權
+                // $("#member_info #switch01").change(function () {
+                //     var userstate, state_id;
+                //     if ($(this).is(':checked')) {
+                //         userstate = 'true';
+                //         state_id = $(this).data('id');
+                //         //console.log(userstate + $(this).data('id'));
+                //         $(this).next().text('啟用');
+                //     } else {
+                //         userstate = 'false';
+                //         state_id = $(this).data('id');
+                //         //console.log(userstate + $(this).data('id'));
+                //         $(this).next().text('停權');
+                //     }
+
+                //     // 傳遞 id 和 啟用/停權 至後端更新會員狀態
+                //     $.ajax({
+                //         type: "POST",
+                //         url: "api/member/member_userstate_api.php",
+                //         data: { id: state_id, userstate: userstate },
+                //         dataType: "json",
+                //         success: showdata_userstate,
+                //         error: function () {
+                //             alert("error-api/member/member_userstate_api.php");
+                //         }
+                //     })
+                // });
+            } else {
+                // 驗證失敗，需重新登入
+                $("#loginModal").modal("show");
+            }
+        }
+
+        // 設定 cookie
+
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        // 取得 cookie
+        function getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function showdata_userstate(data) {
+            //console.log(data);
+            if (data.state) {
+                alert(data.message);
+            } else {
+                alert(data.message);
+            }
+        }
+
+        // 登出帳號 (刪除 uid 並重整畫面)
+        function logout() {
+            if (confirm("確定要登出嗎") == true) {
+                setCookie('uid01', '', 7);
+                location.href = "index.html";
+            }
+        }
+
+    </script>
+
+    <!-- 移動特效 -->
+    <script src="js/wow.min.js"></script>
+    <script>
+        new WOW().init();
+    </script>
+    <script>
+        $("#logo_change").mouseenter(function () {
+            $(this).addClass("animate__jello");
+        });
+        $("#logo_change").mouseleave(function () {
+            $(this).removeClass("animate__jello");
+        });
+    </script>
+</body>
+
+</html>

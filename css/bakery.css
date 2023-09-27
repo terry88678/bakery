@@ -1,0 +1,213 @@
+/* 中文字型 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;200;300;400;500;700;900&display=swap');
+
+.fw100{
+    font-weight: 100;
+}
+
+.fw200{
+    font-weight: 200;
+}
+
+.fw300{
+    font-weight: 300;
+}
+
+.fw500{
+    font-weight: 500;
+}
+
+.fw500{
+    font-weight: 500;
+}
+
+.fw700{
+    font-weight: 700;
+}
+
+.fw900{
+    font-weight: 900;
+}
+
+body {
+    font-family: 'Noto Sans TC', sans-serif;
+}
+
+/* 按鈕顏色 */
+.btn-default {
+    background-color: var(--brown14);
+    color: var(--brown10);
+}
+
+.btn-default:hover {
+    background-color: var(--brown13);
+    color: var(--brown09);
+}
+
+/* 資料變更按鈕顏色 */
+.btn-update {
+    background-color: var(--brown13);
+    color: var(--brown09);
+}
+
+.btn-update:hover {
+    background-color: var(--brown12);
+    color: var(--brown08);
+}
+
+/* 表格顏色 */
+.table-top {
+    background-color: var(--brown14);
+    color: var(--brown11);
+}
+
+.table-body {
+    background-color: var(--brown12);
+}
+
+/* Modal顏色 */
+.modal-top {
+    background-color: var(--brown12);
+}
+
+/* 圖片大小 */
+.bg-cover {
+    background-size: cover;
+    background-position: center center;
+}
+
+/* 去除連結底線 */
+a {
+    text-decoration: none;
+}
+
+/* 分支連結樣式 */
+.branch {
+    color: var(--brown14);
+}
+
+.branch a{
+    font-size: 14pt;
+    color: var(--brown03);
+}
+
+.branch a:hover{
+    padding-left: 8px;
+    transition: 1s;
+}
+
+/* 滑鼠指標 */
+
+.myMOUSE {
+    cursor: default;
+}
+
+.join-login a{
+    color: var(--brown13);
+}
+
+.join-login a:hover {
+    color: var(--brown14);
+}
+
+.menu-top {
+    color: var(--brown03);
+    border-radius: 15px 15px 0px 0px ;
+}
+
+.menu-top:hover {
+    background-color: var(--brown12);
+    color: var(--brown02);
+    border-radius: 15px 15px 0px 0px ;
+    transition: 1s;
+}
+
+.menu-top:visited {
+    color: var(--brown03);
+    border-radius: 15px 15px 0px 0px ;
+}
+
+.menu-top-selected {
+    background-color: var(--brown14);
+    color: var(--brown10);
+    border-radius: 15px 15px 0px 0px ;
+}
+
+.menu-top-selected:hover {
+    background-color: var(--brown13);
+    color: var(--brown10);
+    border-radius: 15px 15px 0px 0px ;
+    opacity: 0.9;
+    transition: 1s;
+}
+
+.menu-side {
+    background-color: rgba(248, 249, 250, 0.7);
+}
+
+.menu-side-sort {
+    background-color: rgba(100, 93, 88, 0.1);
+}
+
+.menu-side ul li{
+    list-style: none;
+}
+
+.logo-change {
+    filter: drop-shadow(10px 10px 10px #aaa);
+}
+
+.card-shadow {
+    color: var(--brown14);
+    filter: drop-shadow(8px 8px 8px #666);
+}
+
+.card-shadow:hover {
+    filter: drop-shadow(3px 3px 3px #666);
+    /* border: solid 1px var(--brown12);  */
+    transition: 0.2s;
+}
+
+
+/* 強制將圖片轉成方形 */
+.product-box img {
+    aspect-ratio: 1 / 1; 
+    width: 300px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.modal-footer a{
+    color: var(--red03);
+    filter: drop-shadow(3px 3px 3px #999);
+
+}
+
+.modal-footer a:hover{
+    padding-left: 10px;
+    transition: 1s;
+}
+
+/* 新增產品按鈕 */
+.add-item {
+    background-color: var(--brown14);
+}
+
+.sort-item:hover {
+    padding-left: 30px;
+    transition: 0.7s;
+}
+
+/* 隱藏數字 input 的上下鍵 */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* 購物車單品顯示 */
+.cart-bg:hover {
+    background: var(--brown12);
+    transition: 1s;
+    filter: drop-shadow(3px 3px 3px #999);
+}
