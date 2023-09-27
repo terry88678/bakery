@@ -10,7 +10,7 @@
 // {"state" : false, "message" : "訂單新增失敗"}
 // {"state" : false, "message" : "欄位不允許空白"}
 // {"state" : false, "message" : "欄位錯誤"}
-
+header("Access-Control-Allow-Origin: https://terry88678.github.io");
 if (isset($_POST["username"]) && isset($_POST["product"]) && isset($_POST["quantity"]) && isset($_POST["price"])) {
     if ($_POST["username"] != "" && $_POST["product"] != "" && $_POST["quantity"] != "" && $_POST["price"] != "") {
         

@@ -10,7 +10,7 @@
 // {"state" : false, "message" : "註冊失敗"}
 // {"state" : false, "message" : "欄位不允許空白"}
 // {"state" : false, "message" : "欄位錯誤"}
-
+header("Access-Control-Allow-Origin: https://terry88678.github.io");
 if (isset($_POST["username"]) && isset($_POST["password"]) && isset($_POST["nickname"]) && isset($_POST["birthday"]) && isset($_POST["phone"]) && isset($_POST["email"])) {
     if ($_POST["username"] != "" && $_POST["password"] != "" && $_POST["nickname"] != "" && $_POST["birthday"] != "" && $_POST["phone"] != "" && $_POST["email"] != "") {
         $p_username = $_POST["username"];

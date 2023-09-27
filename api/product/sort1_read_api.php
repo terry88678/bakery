@@ -2,7 +2,7 @@
 // {"state" : true, "message" : "取得產品資料成功", "data" : "產品資料"}
 // {"state" : false, "message" : "取得產品資料失敗"}
 // {"state" : false, "message" : "查無產品資料"}
-
+header("Access-Control-Allow-Origin: https://terry88678.github.io");
 require_once "../dbtools.php";
 
 $conn = create_connect();

@@ -3,7 +3,7 @@
 // {"state" : false, "message" : "取得個人資料失敗"}
 // {"state" : false, "message" : "查無個人資料"}
 
-
+header("Access-Control-Allow-Origin: https://terry88678.github.io");
 if (isset($_POST["uid"])) {
     if ($_POST["uid"] != "") {
         $p_uid = $_POST["uid"];

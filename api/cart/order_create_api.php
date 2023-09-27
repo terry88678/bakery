@@ -10,7 +10,7 @@
 // {"state" : false, "message" : "訂單新增失敗"}
 // {"state" : false, "message" : "欄位不允許空白"}
 // {"state" : false, "message" : "欄位錯誤"}
-
+header("Access-Control-Allow-Origin: https://terry88678.github.io");
 if (isset($_POST["username"]) && isset($_POST["products"]) && isset($_POST["quantities"]) && isset($_POST["prices"]) && isset($_POST["total"]) && isset($_POST["phone"]) && isset($_POST["realname"]) && isset($_POST["address"]) && isset($_POST["pay"])) {
     if ($_POST["username"] != "" && $_POST["products"] != "" && $_POST["quantities"] != "" && $_POST["prices"] != "" && $_POST["total"] != "" && $_POST["phone"] != "" && $_POST["realname"] != "" && $_POST["address"] != "" && $_POST["pay"] != "") {
         

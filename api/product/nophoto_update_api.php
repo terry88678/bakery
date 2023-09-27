@@ -11,7 +11,7 @@
 // {"state" : false, "message" : "產品更新失敗"}
 // {"state" : false, "message" : "欄位不允許空白"}
 // {"state" : false, "message" : "欄位錯誤"}
-
+header("Access-Control-Allow-Origin: https://terry88678.github.io");
 if (isset($_POST["id"]) && isset($_POST["category"]) && isset($_POST["product"]) && isset($_POST["price"]) && isset($_POST["discount"]) && isset($_POST["content"])) {
     if ($_POST["id"] != "" && $_POST["category"] != "" && $_POST["product"] != "" && $_POST["price"] != "" && $_POST["discount"] != "" && $_POST["content"] != "") {
         $p_id = $_POST["id"];

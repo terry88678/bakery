@@ -2,7 +2,7 @@
 // {"state" : true, "message" : "取得訂單資料成功", "data" : "訂單資料"}
 // {"state" : false, "message" : "取得會員資料失敗"}
 // {"state" : false, "message" : "查無訂單資料"}
-
+header("Access-Control-Allow-Origin: https://terry88678.github.io");
 require_once "../dbtools.php";
 
 $conn = create_connect();

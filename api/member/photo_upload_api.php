@@ -17,7 +17,7 @@
 // {"state" : false, "message" : "檔案上傳失敗", "dataInfo" : "檔案相關訊息name/type/tmp_name/error/size"}
 // {"state" : false, "message" : "檔案不存在"}
 // {"state" : false, "message" : "檔案格式不符"}
-
+header("Access-Control-Allow-Origin: https://terry88678.github.io");
 if (isset($_FILES['file']['name']) && $_FILES['file']['name'] != "") {
     if ($_FILES['file']['type'] == 'image/jpeg' || $_FILES['file']['type'] == 'image/png') {
         $location = 'member_photo/' . substr(hash('sha256', uniqid(time())), 0, 10) . '_' . $_FILES['file']['name'];

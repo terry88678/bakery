@@ -1,4 +1,5 @@
 <?php
+header("Access-Control-Allow-Origin: https://terry88678.github.io");
     if(isset($_POST["id"]) && isset($_POST["isadmin"])){
         if($_POST["id"] != "" && $_POST["isadmin"] != ""){
             $p_id = $_POST["id"];

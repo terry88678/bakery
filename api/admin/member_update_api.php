@@ -9,7 +9,7 @@
 // {"state" : false, "message" : "更新失敗"}
 // {"state" : false, "message" : "欄位不允許空白"}
 // {"state" : false, "message" : "欄位錯誤"}
-
+header("Access-Control-Allow-Origin: https://terry88678.github.io");
 if (isset($_POST["id"]) && isset($_POST["realname"]) && isset($_POST["birthday"]) && isset($_POST["phone"]) && isset($_POST["email"])) {
     if ($_POST["id"] != "" && $_POST["realname"] != "" && $_POST["birthday"] != "" && $_POST["phone"] != "" && $_POST["email"] != "") {
         $p_id = $_POST["id"];

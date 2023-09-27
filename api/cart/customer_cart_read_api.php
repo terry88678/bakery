@@ -3,7 +3,7 @@
 // {"state" : false, "message" : "取得購物車資料失敗"}
 // {"state" : false, "message" : "查無會員資料"}
 
-
+header("Access-Control-Allow-Origin: https://terry88678.github.io");
 if (isset($_POST["customer_uid"])) {
     if ($_POST["customer_uid"] != "") {
         $customer_uid = $_POST["customer_uid"];

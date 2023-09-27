@@ -2,7 +2,7 @@
 // {"state" : true, "message" : "取得會員資料成功", "data" : "會員資料"}
 // {"state" : false, "message" : "取得會員資料失敗"}
 // {"state" : false, "message" : "查無會員資料"}
-
+header("Access-Control-Allow-Origin: https://terry88678.github.io");
 if (isset($_POST["orderno"]) && isset($_POST["phone"])) {
     if ($_POST["orderno"] != "" && $_POST["phone"] != "") {
         $p_orderno = $_POST["orderno"];

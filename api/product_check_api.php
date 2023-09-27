@@ -6,7 +6,7 @@
 // {"state" : false, "message" : "欄位不允許空白"}
 // {"state" : false, "message" : "欄位錯誤"}"
 
-
+header("Access-Control-Allow-Origin: https://terry88678.github.io");
 if (isset($_POST["product"])) {
     if ($_POST["product"] != "") {
         $p_product = $_POST["product"];

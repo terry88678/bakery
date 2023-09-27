@@ -1,4 +1,5 @@
 <?php
+header("Access-Control-Allow-Origin: https://terry88678.github.io");
     function create_connect(){
         $link = mysqli_connect("localhost", "owner", "123456") or die("連線失敗".mysqli_connect_error());
         return $link;

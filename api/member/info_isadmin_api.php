@@ -1,4 +1,5 @@
 <?php
+header("Access-Control-Allow-Origin: https://terry88678.github.io");
     if(isset($_POST["uid"])){
         if($_POST["uid"] != ""){
             $p_uid = $_POST["uid"];
